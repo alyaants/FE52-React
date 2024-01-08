@@ -1,0 +1,22 @@
+@import "../../styles/colors.scss";
+.container {
+  display: flex;
+  border-top: 1px solid $light;
+  max-height: 80px;
+}
+
+.button {
+  padding: 28px 47px;
+  cursor: pointer;
+  font-size: 25px;
+  color: $medium;
+  &:hover {
+    color: $primary;
+  }
+  &:first-child {
+    border-right: 1px solid $light;
+  }
+}
+.activeButton {
+  color: $secondary;
+}

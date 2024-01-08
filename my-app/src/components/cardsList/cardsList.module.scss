@@ -1,0 +1,13 @@
+.cardsListContainer{
+    display:flex;
+    gap: 32px;
+}
+.medium{
+    max-width: 740px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+.small{
+    flex-wrap: wrap;
+}

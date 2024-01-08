@@ -1,0 +1,25 @@
+@import "../../../styles/colors.scss";
+.signIn {
+  color: $primary;
+  cursor: pointer;
+  margin-left: 4px;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.additionalInfo {
+  color: $gray;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+.darkAdditionalInfo{
+  color: $medium;
+  .signIn{
+    color: $primary-secondary;
+  }
+}

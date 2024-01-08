@@ -1,0 +1,22 @@
+.likeBtn {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  color: black;
+}
+.likeBtn .faThumbsUp {
+  margin: auto;
+  font-size: 24px;
+}
+
+.dislikeBtn {
+  width: 22px;
+  height: 22px;
+  color: black;
+  cursor: pointer;
+}
+
+.dislikeBtn .faThumbsDown {
+  margin: auto;
+  font-size: 24px;
+}

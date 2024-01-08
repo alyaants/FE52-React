@@ -1,0 +1,224 @@
+@import "src/styles/colors.scss";
+//общие стили
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: $gray;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cardImg:hover {
+  cursor: pointer;
+}
+
+.cardImg {
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+.iconsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 41px;
+  border-bottom: 1px solid $medium;
+}
+
+.darkIconsWrapper {
+  border-color: $gray;
+}
+
+.icons {
+  display: flex;
+  gap: 25px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &:hover {
+    cursor: pointer;
+    svg > path {
+      fill: $primary;
+    }
+  }
+}
+
+// large
+
+.large {
+  max-width: 736px;
+
+  .content {
+    gap: 32px;
+    margin-bottom: 31px;
+  }
+
+  .contentText {
+    max-width: 448px;
+  }
+
+  .cardTitle {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 44px;
+    color: $secondary;
+    margin-bottom: 24px;
+    max-width: 440px;
+
+    &:hover {
+      cursor: pointer;
+      color: $primary;
+    }
+  }
+
+  .text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    color: $gray;
+  }
+
+  .cardImg {
+    width: 256px;
+    height: 244px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+//medium
+
+.medium {
+  max-width: 352px;
+
+  .content {
+    flex-direction: column-reverse;
+  }
+
+  .contentText {
+    max-width: 100%;
+    margin-bottom: 28px;
+  }
+
+  .cardTitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    height: 56px;
+    color: $secondary;
+
+    &:hover {
+      cursor: pointer;
+      color: $primary;
+    }
+  }
+
+  .cardImg {
+    width: 352px;
+    height: 246px;
+    margin-bottom: 24px;
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .darkTabTitle {
+    color: $white;
+  }
+
+  .darkIcon {
+    color: $white;
+    svg > path {
+      fill: $white;
+    }
+    &:hover {
+      svg > path {
+        fill: $primary;
+      }
+    }
+  }
+}
+
+//small
+
+// .small {
+//   @include smallCard();
+// }
+
+//search
+
+// .search {
+//   @include smallCard();
+//   max-width: unset;
+//   margin-bottom: 40px;
+//   padding-right: 20px;
+//   .content {
+//     flex-direction: row-reverse;
+//     justify-content: flex-end;
+//   }
+// }
+
+.small{
+  width: 354px;
+  margin-bottom: 50px;
+  .content {
+    margin-bottom: 24px;
+    gap: 30px;
+  }
+
+  .contentText {
+    max-width: 222px;
+  }
+
+  .cardTitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    height: 84px;
+    color: $secondary;
+
+    &:hover {
+      cursor: pointer;
+      color: $primary;
+    }
+  }
+  .cardImg {
+    width: 96px;
+    height: 96px;
+  }
+
+  .darkTabTitle {
+    color: $white;
+  }
+
+  .darkIcon {
+    color: $white;
+    svg > path {
+      fill: $white;
+    }
+    &:hover {
+      svg > path {
+        fill: $primary;
+      }
+    }
+  }
+}
