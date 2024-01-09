@@ -6,6 +6,7 @@ import Favorite from "../assets/icons/favorite";
 import Other from "../assets/icons/other";
 import { Theme } from "../../@types";
 import { useThemeContext } from "../../context/theme";
+
 export enum PostCardSize {
   Large = "large",
   Medium = "medium",
@@ -21,7 +22,7 @@ interface PostCardProps {
   title: string;
   author?: number;
   onMoreClick?: () => void;
-  onImageClick?: () => void,
+  onImageClick?: () => void;
 }
 
 const PostCard = (props: PostCardProps) => {
@@ -43,9 +44,9 @@ const PostCard = (props: PostCardProps) => {
             <p className={styles.text}>{props.text}</p>
           )}
         </div>
-        <div className={styles.cardImg}>
-          <img src={props.image} alt="imagePost" />
-        </div>
+          <div className={styles.cardImg}>
+            <img onClick={props.onImageClick} src={props.image} alt=""  />
+          </div>
       </div>
       <div
         className={classNames(styles.iconsWrapper, {
@@ -81,9 +82,11 @@ const PostCard = (props: PostCardProps) => {
               [styles.darkIcon]: themeValue === Theme.Dark,
             })}
           >
-            {props.onMoreClick && (<div onClick={props.onMoreClick}>
-              <Other />
-            </div>)}
+            {props.onMoreClick && (
+              <div onClick={props.onMoreClick}>
+                <Other />
+              </div>
+            )}
           </div>
         </div>
       </div>

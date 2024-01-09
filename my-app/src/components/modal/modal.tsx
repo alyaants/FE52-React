@@ -4,7 +4,6 @@ import ReactModal from "react-modal";
 import style from "./modal.module.scss";
 import { CloseIcon } from "../assets/icons/closeIcon";
 
-
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,10 +12,14 @@ interface ModalProps {
 
 const Modal = (props: ModalProps) => {
   return (
-    <ReactModal className={style.containerModal} isOpen={props.isOpen} onRequestClose={props.onClose}>
-         {/* <div onClick={onClose} className={style.closeModal}>
+    <ReactModal
+      className={style.containerModal}
+      isOpen={props.isOpen}
+      onRequestClose={props.onClose}
+    >
+      <div onClick={props.onClose} className={style.closeModal}>
         <CloseIcon fill="black" />
-      </div> */}
+      </div>
       {props.children}
     </ReactModal>
   );

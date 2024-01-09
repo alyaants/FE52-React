@@ -5,6 +5,7 @@ import TabsList from "../../tabsList";
 import Title from "../../title";
 import styles from "./home.module.scss";
 import SelectedPost from "./selectedPost";
+import SelectedImg from "./selectedImg/selectedImg";
 const MOCK_ARRAY = [
   {
     id: 1,
@@ -187,6 +188,7 @@ const Home = () => {
       />
       <CardsList cardsList={cardsList} />
       <SelectedPost />
+      <SelectedImg />
     </div>
   );
 };

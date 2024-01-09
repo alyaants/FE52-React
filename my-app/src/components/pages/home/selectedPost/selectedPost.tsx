@@ -13,10 +13,12 @@ const SelectedPost = () => {
   const isOpened = useSelector(PostSelectors.getSelectedPostOpened);
   const selectedPost = useSelector(PostSelectors.getSelectedPost);
   const dispatch = useDispatch();
+
   const onCloseModal = () => {
     dispatch(setSelectedPostOpened(false));
     dispatch(setSelectedPost(null));
   };
+
   return selectedPost ? (
     <Modal isOpen={isOpened} onClose={onCloseModal}>
       <PostCard size={PostCardSize.Large} {...selectedPost} />
