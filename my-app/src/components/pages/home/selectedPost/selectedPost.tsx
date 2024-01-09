@@ -6,7 +6,7 @@ import {
   setSelectedPost,
   setSelectedPostOpened,
 } from "../../../../redux/reducers/postSlice";
-import PostCard from "../../../postCard";
+import PostCard from "../../../postCard/postCard";
 import { PostCardSize } from "../../../postCard/postCard";
 
 const SelectedPost = () => {

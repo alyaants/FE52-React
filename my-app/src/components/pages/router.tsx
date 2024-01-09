@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./home";
-import SignUp from "./signUp";
-import RegistrationConfirmation from "./registrationConfirmation";
-import Header from "../header";
-import SignIn from "./signIn";
-import Success from "./success";
+import Home from "./home/home";
+import SignUp from "./signUp/signUp";
+import RegistrationConfirmation from "./registrationConfirmation/registrationConfirmation";
+import Header from "../header/header";
+import SignIn from "./signIn/signIn";
+import Success from "./success/success";
 export enum RoutesList {
   Home = "/",
   SignUp = "/sign-up",

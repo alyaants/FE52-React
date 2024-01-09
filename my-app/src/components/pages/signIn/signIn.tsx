@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import FormPagesContainer from "../../formPagesContainer";
-import Input from "../../input";
+import Input from "../../input/input";
 import styles from "../signUp/signUp.module.scss";
 import { useThemeContext } from "../../../context/theme";
 import classNames from "classnames";

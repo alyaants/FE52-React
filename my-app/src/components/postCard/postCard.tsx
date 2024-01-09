@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import styles from "./postCard.module.scss";
 import Like from "../assets/icons/like";
-import Dislike from "../assets/icons/dislike";
+import Dislike from "../assets/icons/dislike/dislike";
 import Favorite from "../assets/icons/favorite";
 import Other from "../assets/icons/other";
 import { Theme } from "../../@types";

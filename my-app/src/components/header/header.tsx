@@ -8,7 +8,7 @@ import { MenuIcon } from "../assets/icons/menuIcon";
 import { RoutesList } from "../pages/router";
 import { useMemo, useState } from "react";
 import { CloseIcon } from "../assets/icons/closeIcon";
-import ThemeSwitcher from "../themeSwitcher";
+import ThemeSwitcher from "../themeSwitcher/themeSwitcher";
 import UserName from "../username/username";
 import { AccountIcon } from "../assets/icons/accountIcon";
 import { SearchIcon } from "../assets/icons/searchIcon";

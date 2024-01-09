@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import Button, { ButtonTypes } from "../button";
-import Title from "../title";
+import Title from "../title/title";
 import styles from "./formPagesContainer.module.scss";
 import { Children, Theme } from "../../@types";
 import { useThemeContext } from "../../context/theme";

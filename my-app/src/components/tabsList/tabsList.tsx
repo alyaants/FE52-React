@@ -1,4 +1,4 @@
-import Tab from "./tab";
+import Tab from "./tab/tab";
 import classNames from "classnames";
 import { TabsListType, TabsTypes, Theme } from "../../@types";
 import styles from "./tabsList.module.scss";

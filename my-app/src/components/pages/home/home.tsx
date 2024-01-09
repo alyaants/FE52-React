@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { PostsList, TabsTypes, Theme } from "../../../@types";
-import CardsList from "../../cardsList";
-import TabsList from "../../tabsList";
-import Title from "../../title";
+import { PostsList, TabsTypes } from "../../../@types";
+import CardsList from "../../cardsList/cardsList";
+import TabsList from "../../tabsList/tabsList";
+import Title from "../../title/title";
 import styles from "./home.module.scss";
-import SelectedPost from "./selectedPost";
+import SelectedPost from "./selectedPost/selectedPost";
 import SelectedImg from "./selectedImg/selectedImg";
 const MOCK_ARRAY = [
   {

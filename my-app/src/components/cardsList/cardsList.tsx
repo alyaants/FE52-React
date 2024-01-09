@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Post, PostsList } from "../../@types";
-import PostCard from "../postCard";
+import PostCard from "../postCard/postCard";
 import { PostCardSize } from "../postCard/postCard";
 import styles from "./cardsList.module.scss";
 import {
