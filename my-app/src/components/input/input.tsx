@@ -1,4 +1,4 @@
-import { ChangeEvent, LegacyRef, forwardRef } from "react";
+import { ChangeEvent, LegacyRef } from "react";
 import classNames from "classnames";
 import styles from "./input.module.scss";
 import React from "react";
@@ -6,13 +6,14 @@ import { useThemeContext } from "../../context/theme";
 import { Theme } from "../../@types";
 
 interface InputProps {
-  title: string;
+  title?: string;
   placeholder: string;
   value: string;
   onСhange: (value: string) => void;
   disabled?: boolean;
   errorText?: string;
   textarea?: boolean;
+  className?: string;
   // ref: LegacyRef<HTMLInputElement | null>;
 }
 

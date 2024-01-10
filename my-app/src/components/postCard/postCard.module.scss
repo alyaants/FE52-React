@@ -1,5 +1,4 @@
-@import "src/styles/colors.scss";
-//общие стили
+@import "../../styles/colors.scss";
 
 .content {
   display: flex;
@@ -49,16 +48,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
   &:hover {
-    cursor: pointer;
     svg > path {
       fill: $primary;
     }
   }
 }
-
-// large
-
 .large {
   max-width: 736px;
 
@@ -102,8 +98,6 @@
     }
   }
 }
-
-//medium
 
 .medium {
   max-width: 352px;

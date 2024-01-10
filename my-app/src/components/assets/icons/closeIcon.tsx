@@ -1,6 +1,6 @@
 export const CloseIcon = ({
-  width = "40",
-  height = "40",
+  width = "24",
+  height = "24",
   fill = "#FFFFFF",
 }) => {
   return (

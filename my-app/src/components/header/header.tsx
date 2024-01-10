@@ -12,21 +12,33 @@ import ThemeSwitcher from "../themeSwitcher/themeSwitcher";
 import UserName from "../username/username";
 import { AccountIcon } from "../assets/icons/accountIcon";
 import { SearchIcon } from "../assets/icons/searchIcon";
+import Input from "../input/input";
 
 const Header = () => {
   const [isOpened, setOpened] = useState(false);
+  const [isSearch, setSearch] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const navigate = useNavigate();
 
-  const navLinks = useMemo(() => [
-    { path: RoutesList.Home, title: "Home" },
-    { path: RoutesList.SignUp, title: "Sign Up" },
-  ] , []);
+  const navLinks = useMemo(
+    () => [
+      { path: RoutesList.Home, title: "Home" },
+      { path: RoutesList.SignUp, title: "Sign Up" },
+    ],
+    []
+  );
 
   const handleMenuOpened = () => {
     setOpened(!isOpened);
   };
+
+  const handleSearchOpened = () => {
+    setSearch(!isSearch);
+  };
+
   const { themeValue } = useThemeContext();
+
   const onLoginButtonClick = () => {
     navigate(RoutesList.SignIn);
   };
@@ -43,14 +55,32 @@ const Header = () => {
           onClick={handleMenuOpened}
           className={styles.burgerMenuButton}
         />
-        <div className={styles.icons}>
+        {isSearch ? (
+          <div className={styles.searchContainer}>
+            <Input
+              placeholder={"Search..."}
+              onСhange={setInputValue}
+              value={inputValue}
+              className={styles.searchInput}
+            />
+
+            <Button
+              type={ButtonTypes.Primary}
+              title={<CloseIcon />}
+              onClick={handleSearchOpened}
+              className={styles.closedSearch}
+            />
+          </div>
+        ) : (
+          <div></div>
+        )}
+        <div className={styles.rightPart}>
           <Button
             type={ButtonTypes.Primary}
             title={<SearchIcon />}
-            onClick={() => {}}
+            onClick={handleSearchOpened}
             className={styles.searchBtn}
           />
-
           <Button
             type={ButtonTypes.Primary}
             title={<AccountIcon />}
@@ -59,7 +89,6 @@ const Header = () => {
           />
         </div>
       </div>
-
       <div className={styles.infoContainer}>
         <Outlet />
         <div

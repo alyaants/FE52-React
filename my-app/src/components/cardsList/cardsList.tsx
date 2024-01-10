@@ -1,9 +1,11 @@
 import { useDispatch } from "react-redux";
-import { Post, PostsList } from "../../@types";
+import { LikeStatus, Post, PostsList } from "../../@types";
 import PostCard from "../postCard/postCard";
 import { PostCardSize } from "../postCard/postCard";
 import styles from "./cardsList.module.scss";
 import {
+  setFavouritesPosts,
+  setLikeStatus,
   setSelectedPost,
   setSelectedPostOpened,
 } from "../../redux/reducers/postSlice";
@@ -29,6 +31,14 @@ const CardsList = (props: CardsListProps) => {
     dispatch(setSelectedImageOpened(true));
   };
 
+  const onStatusClick = (card: Post) => (status: LikeStatus) => {
+    dispatch(setLikeStatus({ card, status }));
+  };
+
+  const onFavouriteClick = (card: Post) => () => {
+    dispatch(setFavouritesPosts({card}));
+  }
+
   return CardsList.length ? (
     <div className={styles.cardsListContainer}>
       {/* <PostCard size={PostCardSize.Large} {...props.cardsList[0]} /> */}
@@ -42,6 +52,8 @@ const CardsList = (props: CardsListProps) => {
                 {...item}
                 onMoreClick={onMoreClick(item)}
                 onImageClick={onImageClick(item.image)}
+                onStatusClick={onStatusClick(item)}
+                onFavouriteClick={onFavouriteClick(item)}
               />
             );
           }
@@ -57,6 +69,8 @@ const CardsList = (props: CardsListProps) => {
                 {...item}
                 onMoreClick={onMoreClick(item)}
                 onImageClick={onImageClick(item.image)}
+                onStatusClick={onStatusClick(item)}
+                onFavouriteClick={onFavouriteClick(item)}
               />
             );
           }

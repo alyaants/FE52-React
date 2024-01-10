@@ -21,7 +21,7 @@ const SelectedPost = () => {
 
   return selectedPost ? (
     <Modal isOpen={isOpened} onClose={onCloseModal}>
-      <PostCard size={PostCardSize.Large} {...selectedPost} />
+      <PostCard size={PostCardSize.Large} {...selectedPost} onStatusClick={(_) => {}} onFavouriteClick={() => {}} />
     </Modal>
   ) : null;
 };

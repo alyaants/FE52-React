@@ -1,11 +1,13 @@
 import classNames from "classnames";
 import styles from "./postCard.module.scss";
-import Like from "../assets/icons/like";
+import Like from "../assets/icons/like/like";
 import Dislike from "../assets/icons/dislike/dislike";
-import Favorite from "../assets/icons/favorite";
+import Favorite from "../assets/icons/favorite/favorite";
 import Other from "../assets/icons/other";
-import { Theme } from "../../@types";
+import { LikeStatus, Theme } from "../../@types";
 import { useThemeContext } from "../../context/theme";
+import { useSelector } from "react-redux";
+import { PostSelectors } from "../../redux/reducers/postSlice";
 
 export enum PostCardSize {
   Large = "large",
@@ -23,11 +25,21 @@ interface PostCardProps {
   author?: number;
   onMoreClick?: () => void;
   onImageClick?: () => void;
+  onStatusClick: (status: LikeStatus) => void;
+  onFavouriteClick: () => void;
 }
 
 const PostCard = (props: PostCardProps) => {
   const postCardStyle = styles[props.size];
   const { themeValue } = useThemeContext();
+  const likedPosts = useSelector(PostSelectors.getLikedPosts);
+  const dislikedPosts = useSelector(PostSelectors.getDislikedPosts);
+  const likedIndex = likedPosts.findIndex((item) => item.id === props.id);
+  const dislikedIndex = dislikedPosts.findIndex((item) => item.id === props.id);
+  const favouritePosts = useSelector(PostSelectors.getFavouritePosts);
+  const favouriteIndex = favouritePosts.findIndex(
+    (item) => item.id === props.id
+  );
   return (
     <div className={classNames(postCardStyle)}>
       <div className={styles.content}>
@@ -44,9 +56,9 @@ const PostCard = (props: PostCardProps) => {
             <p className={styles.text}>{props.text}</p>
           )}
         </div>
-          <div className={styles.cardImg}>
-            <img onClick={props.onImageClick} src={props.image} alt=""  />
-          </div>
+        <div className={styles.cardImg}>
+          <img onClick={props.onImageClick} src={props.image} alt="" />
+        </div>
       </div>
       <div
         className={classNames(styles.iconsWrapper, {
@@ -58,15 +70,17 @@ const PostCard = (props: PostCardProps) => {
             className={classNames(styles.icon, {
               [styles.darkIcon]: themeValue === Theme.Dark,
             })}
+            onClick={() => props.onStatusClick(LikeStatus.Like)}
           >
-            <Like />
+            <Like /> {likedIndex > -1 && 1}
           </div>
           <div
             className={classNames(styles.icon, {
               [styles.darkIcon]: themeValue === Theme.Dark,
             })}
+            onClick={() => props.onStatusClick(LikeStatus.Dislike)}
           >
-            <Dislike />
+            <Dislike /> {dislikedIndex > -1 && 1}
           </div>
         </div>
         <div className={styles.icons}>
@@ -74,8 +88,9 @@ const PostCard = (props: PostCardProps) => {
             className={classNames(styles.icon, {
               [styles.darkIcon]: themeValue === Theme.Dark,
             })}
+            onClick={() => props.onFavouriteClick()}
           >
-            <Favorite />
+            {favouriteIndex === -1 ? <Favorite /> : <Favorite />}
           </div>
           <div
             className={classNames(styles.icon, {

@@ -8,7 +8,7 @@ export type Post = {
   lesson_num?: number;
   title: string;
   author?: number;
-}
+};
 export type PostsList = Post[];
 
 export enum TabsTypes {
@@ -29,4 +29,13 @@ export type Children = ReactElement | ReactElement[];
 export enum Theme {
   Light = "light",
   Dark = "dark",
+}
+
+export enum LikeStatus {
+  Like = "like",
+  Dislike = "dislike",
+}
+export enum FavouriteStatus {
+  Favourite = "favourite",
+  NotFavourite = "notFavourite",
 }
