@@ -8,6 +8,7 @@ type InitialState = {
   likedPosts: PostsList;
   dislikedPosts: PostsList;
   favouritesPosts: PostsList;
+  postsList: PostsList;
 };
 
 const initialState: InitialState = {
@@ -16,10 +17,11 @@ const initialState: InitialState = {
   likedPosts: [],
   dislikedPosts: [],
   favouritesPosts: [],
+  postsList: [],
 };
 
 const postSlice = createSlice({
-  name: "themeReducer",
+  name: "postReducer",
   initialState,
   reducers: {
     setSelectedPostOpened: (state, action: PayloadAction<boolean>) => {
@@ -65,6 +67,11 @@ const postSlice = createSlice({
         state.favouritesPosts.splice(favouriteIndex, 1);
       }
     },
+
+    getPostsList: (_, __: PayloadAction<undefined>) => {}, //сначала получить get пустой
+    setPostsList:(state, action:PayloadAction<PostsList>) =>{ //делаем set action, то что хотим получить и зписать в сагу
+    state.postsList = action.payload
+  }
   },
 });
 export const {
@@ -72,6 +79,8 @@ export const {
   setSelectedPost,
   setLikeStatus,
   setFavouritesPosts,
+  getPostsList,
+  setPostsList,
 } = postSlice.actions;
 
 export const PostSelectors = {
@@ -81,6 +90,7 @@ export const PostSelectors = {
   getLikedPosts: (state: RootState) => state.postReducer.likedPosts,
   getDislikedPosts: (state: RootState) => state.postReducer.dislikedPosts,
   getFavouritePosts: (state: RootState) => state.postReducer.favouritesPosts,
+  getPostsList: (state: RootState) => state.postReducer.postsList,
 };
 
 export default postSlice.reducer;
