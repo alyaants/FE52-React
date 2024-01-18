@@ -6,8 +6,8 @@ import styles from "./cardsList.module.scss";
 import {
   setFavouritesPosts,
   setLikeStatus,
-  setSelectedPost,
-  setSelectedPostOpened,
+  setSelectedPostModal,
+  setSelectedPostModalOpened,
 } from "../../redux/reducers/postSlice";
 import {
   setSelectedImage,
@@ -23,8 +23,8 @@ const CardsList = (props: CardsListProps) => {
   const dispatch = useDispatch();
 
   const onMoreClick = (post: Post) => () => {
-    dispatch(setSelectedPost(post));
-    dispatch(setSelectedPostOpened(true));
+    dispatch(setSelectedPostModal(post));
+    dispatch(setSelectedPostModalOpened(true));
   };
   const onImageClick = (image: string) => () => {
     dispatch(setSelectedImage(image));
@@ -36,8 +36,8 @@ const CardsList = (props: CardsListProps) => {
   };
 
   const onFavouriteClick = (card: Post) => () => {
-    dispatch(setFavouritesPosts({card}));
-  }
+    dispatch(setFavouritesPosts({ card }));
+  };
 
   return CardsList.length ? (
     <div className={styles.cardsListContainer}>

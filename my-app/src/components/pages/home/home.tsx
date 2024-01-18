@@ -4,7 +4,7 @@ import CardsList from "../../cardsList/cardsList";
 import TabsList from "../../tabsList/tabsList";
 import Title from "../../title/title";
 import styles from "./home.module.scss";
-import SelectedPost from "./selectedPost/selectedPost";
+import SelectedPost from "./selectedPostModal/selectedPostModal";
 import SelectedImg from "./selectedImg/selectedImg";
 import { useDispatch, useSelector } from "react-redux";
 import { PostSelectors, getPostsList } from "../../../redux/reducers/postSlice";
@@ -57,3 +57,4 @@ export default Home;
 
 
 
+// 19:48

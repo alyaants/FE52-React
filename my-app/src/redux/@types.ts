@@ -1,5 +1,10 @@
 import { PostsList } from "../@types";
 
+export type PayloadWithDataAndCallback<Data> = {
+  data: Data;
+  callback: () => void;
+};
+
 export type SignUpUserData = {
   username: string;
   email: string;
@@ -12,10 +17,6 @@ export type SignUpResponseData = {
   id: number;
 };
 
-export type SignUpUserPayload = {
-  data: SignUpUserData;
-  callback: () => void;
-};
 
 export type GetPostsPayload = {
   offset: number;
@@ -35,3 +36,13 @@ export type GetPostsResponseData = {
   previous: string;
   results: PostsList;
 };
+
+
+export type ActivateUserData = {
+  uid: string;
+  token: string;
+};
+
+
+export type SignUpUserPayload = PayloadWithDataAndCallback<SignUpUserData>;
+export type ActivateUserPayload = PayloadWithDataAndCallback<ActivateUserData>

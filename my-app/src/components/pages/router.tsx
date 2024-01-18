@@ -5,12 +5,14 @@ import RegistrationConfirmation from "./registrationConfirmation/registrationCon
 import Header from "../header/header";
 import SignIn from "./signIn/signIn";
 import Success from "./success/success";
+import SelectedPost from "./home/selectedPost/selectedPost";
 export enum RoutesList {
   Home = "/",
   SignUp = "/sign-up",
-  RegistrationConfirmation = "/sign-up/confirm",
+  RegistrationConfirmation = "/activate/:uid/:token",
   SignIn = "/sign-in",
-  Success =  "/sign-in/success",
+  Success = "/sign-in/success",
+  SelectedPost = "/post/:id",
 }
 
 const Router = () => {
@@ -26,6 +28,7 @@ const Router = () => {
           />
           <Route path={RoutesList.SignIn} element={<SignIn />} />
           <Route path={RoutesList.Success} element={<Success />} />
+          <Route path={RoutesList.SelectedPost} element={<SelectedPost />} />
         </Route>
       </Routes>
     </BrowserRouter>

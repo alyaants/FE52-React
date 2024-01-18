@@ -4,25 +4,19 @@ import Like from "../assets/icons/like/like";
 import Dislike from "../assets/icons/dislike/dislike";
 import Favorite from "../assets/icons/favorite/favorite";
 import Other from "../assets/icons/other";
-import { LikeStatus, Theme } from "../../@types";
+import { LikeStatus, Post, Theme } from "../../@types";
 import { useThemeContext } from "../../context/theme";
 import { useSelector } from "react-redux";
 import { PostSelectors } from "../../redux/reducers/postSlice";
+import { useNavigate } from "react-router-dom";
 
 export enum PostCardSize {
   Large = "large",
   Medium = "medium",
   Small = "small",
 }
-interface PostCardProps {
+interface PostCardProps extends Post{
   size: PostCardSize;
-  id: number;
-  image: string;
-  text?: string;
-  date: string;
-  lesson_num?: number;
-  title: string;
-  author?: number;
   onMoreClick?: () => void;
   onImageClick?: () => void;
   onStatusClick: (status: LikeStatus) => void;
@@ -40,6 +34,11 @@ const PostCard = (props: PostCardProps) => {
   const favouriteIndex = favouritePosts.findIndex(
     (item) => item.id === props.id
   );
+  const navigate = useNavigate();
+  const onTitleClick = () => {
+    navigate(`/post/${props.id}`);
+  };
+
   return (
     <div className={classNames(postCardStyle)}>
       <div className={styles.content}>
@@ -49,6 +48,7 @@ const PostCard = (props: PostCardProps) => {
             className={classNames(styles.cardTitle, {
               [styles.darkTabTitle]: themeValue === Theme.Dark,
             })}
+            onClick={onTitleClick}
           >
             {props.title}
           </div>

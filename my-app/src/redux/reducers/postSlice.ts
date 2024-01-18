@@ -4,30 +4,32 @@ import { LikeStatus, Post, PostsList } from "../../@types";
 
 type InitialState = {
   isSelectedPostOpened: boolean;
-  selectedPost: Post | null;
+  selectedPostModal: Post | null;
   likedPosts: PostsList;
   dislikedPosts: PostsList;
   favouritesPosts: PostsList;
   postsList: PostsList;
+  selectedPost: Post | null;
 };
 
 const initialState: InitialState = {
   isSelectedPostOpened: false,
-  selectedPost: null,
+  selectedPostModal: null,
   likedPosts: [],
   dislikedPosts: [],
   favouritesPosts: [],
   postsList: [],
+  selectedPost: null,
 };
 
 const postSlice = createSlice({
   name: "postReducer",
   initialState,
   reducers: {
-    setSelectedPostOpened: (state, action: PayloadAction<boolean>) => {
+    setSelectedPostModalOpened: (state, action: PayloadAction<boolean>) => {
       state.isSelectedPostOpened = action.payload;
     },
-    setSelectedPost: (state, action: PayloadAction<Post | null>) => {
+    setSelectedPostModal: (state, action: PayloadAction<Post | null>) => {
       state.selectedPost = action.payload;
     },
     setLikeStatus: (
@@ -69,28 +71,37 @@ const postSlice = createSlice({
     },
 
     getPostsList: (_, __: PayloadAction<undefined>) => {}, //сначала получить get пустой
-    setPostsList:(state, action:PayloadAction<PostsList>) =>{ //делаем set action, то что хотим получить и зписать в сагу
-    state.postsList = action.payload
-  }
+    setPostsList: (state, action: PayloadAction<PostsList>) => {
+      //делаем set action, то что хотим получить и зписать в сагу
+      state.postsList = action.payload;
+    },
+
+    getSelectedPost: (_, __: PayloadAction<string>) => {},
+    setSelectedPost: (state, action: PayloadAction<Post | null>) => {
+      state.selectedPost = action.payload;
+    },
   },
 });
 export const {
-  setSelectedPostOpened,
-  setSelectedPost,
+  setSelectedPostModalOpened,
+  setSelectedPostModal,
   setLikeStatus,
   setFavouritesPosts,
   getPostsList,
   setPostsList,
+  getSelectedPost,
+  setSelectedPost,
 } = postSlice.actions;
 
 export const PostSelectors = {
-  getSelectedPostOpened: (state: RootState) =>
+  getSelectedPostModalOpened: (state: RootState) =>
     state.postReducer.isSelectedPostOpened,
-  getSelectedPost: (state: RootState) => state.postReducer.selectedPost,
+  getSelectedPostModal: (state: RootState) => state.postReducer.selectedPost,
   getLikedPosts: (state: RootState) => state.postReducer.likedPosts,
   getDislikedPosts: (state: RootState) => state.postReducer.dislikedPosts,
   getFavouritePosts: (state: RootState) => state.postReducer.favouritesPosts,
   getPostsList: (state: RootState) => state.postReducer.postsList,
+  getSelectedPost: (state: RootState) => state.postReducer.selectedPost,
 };
 
 export default postSlice.reducer;

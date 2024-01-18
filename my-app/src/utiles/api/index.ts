@@ -1,5 +1,5 @@
 import { create } from "apisauce";
-import { SignUpUserData } from "../../redux/@types";
+import { ActivateUserData, SignUpUserData } from "../../redux/@types";
 
 const API = create({
   baseURL: "https://studapi.teachmeskills.by",
@@ -13,4 +13,12 @@ const getPosts = () => {
   return API.get("/blog/posts/?limit=12");
 };
 
-export default { signUpUser, getPosts };
+const activateUser = (data: ActivateUserData) => {
+  return API.post("/auth/users/activation/", data);
+};
+
+const getSelectedPost = (id:string) => {
+  return API.get(`/blog/posts/${id}/`);
+};
+
+export default { signUpUser, getPosts, activateUser, getSelectedPost };
