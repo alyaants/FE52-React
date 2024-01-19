@@ -5,6 +5,8 @@ import styles from "./formPagesContainer.module.scss";
 import { Children, Theme } from "../../@types";
 import { useThemeContext } from "../../context/theme";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
+import { RoutesList } from "../pages/router";
 
 interface FormPagesContainerProps {
   title: string;
@@ -15,10 +17,13 @@ interface FormPagesContainerProps {
 }
 const FormPagesContainer = (props: FormPagesContainerProps) => {
   const { themeValue } = useThemeContext();
-
+  const navigate = useNavigate();
+  const onHomeClick = () => {
+    navigate(RoutesList.Home);
+  };
   return (
     <div className={classNames(styles.container, {[styles.darkContainer]: themeValue === Theme.Dark})}>
-      <div className={styles.breadcrumbs}>Back to home</div>
+      <div className={styles.breadcrumbs} onClick={onHomeClick}>Back to home</div>
       <Title title={props.title} />
       <div className={styles.formContainer}>
         <div className={styles.fieldsContainer}>{props.children}</div>

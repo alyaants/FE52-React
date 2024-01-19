@@ -8,15 +8,18 @@ import SelectedPost from "./selectedPostModal/selectedPostModal";
 import SelectedImg from "./selectedImg/selectedImg";
 import { useDispatch, useSelector } from "react-redux";
 import { PostSelectors, getPostsList } from "../../../redux/reducers/postSlice";
+import { AuthSelectors } from "../../../redux/reducers/authSlice";
 
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState(TabsTypes.All);
-  const [isLoggedIn, setLoggedIn] = useState(false);
   
   const dispatch = useDispatch();
   const cardsList = useSelector(PostSelectors.getPostsList);
 
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
+
+  
 
 
   const tabsList = useMemo(
@@ -34,9 +37,6 @@ const Home = () => {
 
   const onTabClick = (tab: TabsTypes) => () => {
     setActiveTab(tab);
-    if (tab === TabsTypes.Popular) {
-      setLoggedIn(true);
-    }
   };
   return (
     <div>

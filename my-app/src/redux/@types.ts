@@ -17,7 +17,6 @@ export type SignUpResponseData = {
   id: number;
 };
 
-
 export type GetPostsPayload = {
   offset: number;
   isOverwrite: boolean;
@@ -37,12 +36,20 @@ export type GetPostsResponseData = {
   results: PostsList;
 };
 
-
 export type ActivateUserData = {
   uid: string;
   token: string;
 };
 
+export type SignInData = {
+  email: string;
+  password: string;
+};
+export type SignInUserResponseData = {
+  access: string;
+  refresh: string;
+};
 
 export type SignUpUserPayload = PayloadWithDataAndCallback<SignUpUserData>;
-export type ActivateUserPayload = PayloadWithDataAndCallback<ActivateUserData>
+export type ActivateUserPayload = PayloadWithDataAndCallback<ActivateUserData>;
+export type SignInUserPayload = PayloadWithDataAndCallback<SignInData>;

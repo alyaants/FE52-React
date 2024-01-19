@@ -13,11 +13,15 @@ import UserName from "../username/username";
 import { AccountIcon } from "../assets/icons/accountIcon";
 import { SearchIcon } from "../assets/icons/searchIcon";
 import Input from "../input/input";
+import { useSelector } from "react-redux";
+import { AuthSelectors } from "../../redux/reducers/authSlice";
 
 const Header = () => {
   const [isOpened, setOpened] = useState(false);
   const [isSearch, setSearch] = useState(false);
   const [inputValue, setInputValue] = useState("");
+
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
 
   const navigate = useNavigate();
 
@@ -26,7 +30,7 @@ const Header = () => {
       { path: RoutesList.Home, title: "Home" },
       { path: RoutesList.SignUp, title: "Sign Up" },
     ],
-    []
+    [isLoggedIn]
   );
 
   const handleMenuOpened = () => {
@@ -87,6 +91,16 @@ const Header = () => {
             onClick={onLoginButtonClick}
             className={styles.userBtn}
           />
+          {isLoggedIn ? (
+            <UserName userName={"Alevtina Ants"} />
+          ) : (
+            <Button
+              type={ButtonTypes.Primary}
+              title={<AccountIcon />}
+              onClick={onLoginButtonClick}
+              className={styles.userBtn}
+            />
+          )}
         </div>
       </div>
       <div className={styles.infoContainer}>
