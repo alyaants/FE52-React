@@ -24,11 +24,12 @@ const Header = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
 
   const navigate = useNavigate();
+  const userInfo = useSelector(AuthSelectors.getUserInfo);
 
   const navLinks = useMemo(
     () => [
       { path: RoutesList.Home, title: "Home" },
-      { path: RoutesList.SignUp, title: "Sign Up" },
+      ...(isLoggedIn ? [{ path: RoutesList.SignIn, title: "Add Post" }] : []),
     ],
     [isLoggedIn]
   );
@@ -85,14 +86,8 @@ const Header = () => {
             onClick={handleSearchOpened}
             className={styles.searchBtn}
           />
-          <Button
-            type={ButtonTypes.Primary}
-            title={<AccountIcon />}
-            onClick={onLoginButtonClick}
-            className={styles.userBtn}
-          />
-          {isLoggedIn ? (
-            <UserName userName={"Alevtina Ants"} />
+          {isLoggedIn && userInfo ? (
+            <UserName userName={userInfo.username} />
           ) : (
             <Button
               type={ButtonTypes.Primary}
@@ -121,7 +116,9 @@ const Header = () => {
           })}
         >
           <div>
-            <UserName userName={"Alevtina Ants"} />
+            {isLoggedIn && userInfo && (
+              <UserName userName={userInfo.username} />
+            )}
             {navLinks.map((link) => (
               <NavLink
                 key={link.path}

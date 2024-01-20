@@ -6,8 +6,8 @@ import Header from "../header/header";
 import SignIn from "./signIn/signIn";
 import Success from "./success/success";
 import SelectedPost from "./home/selectedPost/selectedPost";
-import { useSelector } from "react-redux";
-import { AuthSelectors } from "../../redux/reducers/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthSelectors, getUserInfo } from "../../redux/reducers/authSlice";
 import { useEffect } from "react";
 export enum RoutesList {
   Home = "/",
@@ -21,12 +21,12 @@ export enum RoutesList {
 
 const Router = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
-
-  // useEffect(() => {
-  //   if (isLaoggedIn) {
-  //     disptch(getUserInfo());
-  //   }
-  // }, [isLoggedIn]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getUserInfo());
+    }
+  }, [isLoggedIn]);
 
   return (
     <BrowserRouter>

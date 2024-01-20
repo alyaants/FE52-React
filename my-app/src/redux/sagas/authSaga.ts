@@ -4,7 +4,9 @@ import { ApiResponse } from "apisauce";
 
 import {
   activateUser,
+  getUserInfo,
   setAccessToken,
+  setUserInfo,
   signInUser,
   signUpUser,
 } from "../reducers/authSlice";
@@ -14,9 +16,10 @@ import {
   SignInUserResponseData,
   SignUpResponseData,
   SignUpUserPayload,
+  UserInfoResponse,
 } from "../@types";
 import API from "../../utiles/api";
-import { ACCES_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../../utiles/constants";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../../utiles/constants";
 
 function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
   const { data, callback } = action.payload;
@@ -49,7 +52,7 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
   );
   if (response.ok && response.data) {
     yield put(setAccessToken(response.data.access));
-    localStorage.setItem(ACCES_TOKEN_KEY, response.data.access);
+    localStorage.setItem(ACCESS_TOKEN_KEY, response.data.access);
     localStorage.setItem(REFRESH_TOKEN_KEY, response.data.refresh);
 
     callback();
@@ -58,10 +61,27 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
   }
 }
 
+function* userInfoWorker() {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+
+  if (accessToken) {
+    const response: ApiResponse<UserInfoResponse> = yield call(
+      API.getUserInfo,
+      accessToken
+    );
+    if (response && response?.ok && response?.data) {
+      yield put(setUserInfo(response.data));
+    } else {
+      console.error("Get User Info error", response.problem);
+    }
+  }
+}
+
 export default function* authSaga() {
   yield all([
     takeLatest(signUpUser, signUpUserWorker), // забери пследнего и впихни в signUpUserWorker
     takeLatest(activateUser, activateUserWorker),
     takeLatest(signInUser, signInUserWorker),
+    takeLatest(getUserInfo, userInfoWorker),
   ]);
 }

@@ -3,16 +3,19 @@ import {
   ActivateUserPayload,
   SignInUserPayload,
   SignUpUserPayload,
+  UserInfoResponse,
 } from "../@types";
-import { ACCES_TOKEN_KEY } from "../../utiles/constants";
+import { ACCESS_TOKEN_KEY } from "../../utiles/constants";
 import { RootState } from "../store";
 
 type InitialState = {
   accessToken: string;
+  userInfo: UserInfoResponse | null;
 };
 
 const initialState: InitialState = {
-  accessToken: localStorage.getItem(ACCES_TOKEN_KEY) || "",
+  accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || "",
+  userInfo: null,
 };
 
 const authSlice = createSlice({
@@ -27,14 +30,25 @@ const authSlice = createSlice({
     setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
     },
+    getUserInfo: (_, __: PayloadAction<undefined>) => {},
+    setUserInfo: (state, action: PayloadAction<UserInfoResponse | null>) => {
+      state.userInfo = action.payload;
+    },
   },
 });
 
-export const { signUpUser, activateUser, signInUser, setAccessToken } =
-  authSlice.actions;
+export const {
+  signUpUser,
+  activateUser,
+  signInUser,
+  setAccessToken,
+  getUserInfo,
+  setUserInfo,
+} = authSlice.actions;
 
 export const AuthSelectors = {
   getLoggedIn: (state: RootState) => !!state.authReducer.accessToken,
+  getUserInfo: (state: RootState) => state.authReducer.userInfo,
 };
 
 export default authSlice.reducer;

@@ -49,6 +49,11 @@ export type SignInUserResponseData = {
   access: string;
   refresh: string;
 };
+export type UserInfoResponse = {
+  username: string;
+  id: number;
+  email: string;
+};
 
 export type SignUpUserPayload = PayloadWithDataAndCallback<SignUpUserData>;
 export type ActivateUserPayload = PayloadWithDataAndCallback<ActivateUserData>;
