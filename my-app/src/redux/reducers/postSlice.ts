@@ -10,6 +10,8 @@ type InitialState = {
   favouritesPosts: PostsList;
   postsList: PostsList;
   selectedPost: Post | null;
+  selectedPosLoading: boolean;
+  myPosts: PostsList;
 };
 
 const initialState: InitialState = {
@@ -20,6 +22,8 @@ const initialState: InitialState = {
   favouritesPosts: [],
   postsList: [],
   selectedPost: null,
+  selectedPosLoading: false,
+  myPosts: [],
 };
 
 const postSlice = createSlice({
@@ -77,8 +81,15 @@ const postSlice = createSlice({
     },
 
     getSelectedPost: (_, __: PayloadAction<string>) => {},
+    setSelectedPostLoading: (state, action: PayloadAction<boolean>) => {
+      state.selectedPosLoading = action.payload;
+    },
     setSelectedPost: (state, action: PayloadAction<Post | null>) => {
       state.selectedPost = action.payload;
+    },
+    getMyPosts: (_, __: PayloadAction<undefined>) => {},
+    setMyPosts: (state, action: PayloadAction<PostsList>) => {
+      state.myPosts = action.payload;
     },
   },
 });
@@ -90,7 +101,10 @@ export const {
   getPostsList,
   setPostsList,
   getSelectedPost,
+  setSelectedPostLoading,
   setSelectedPost,
+  getMyPosts,
+  setMyPosts,
 } = postSlice.actions;
 
 export const PostSelectors = {
@@ -102,6 +116,9 @@ export const PostSelectors = {
   getFavouritePosts: (state: RootState) => state.postReducer.favouritesPosts,
   getPostsList: (state: RootState) => state.postReducer.postsList,
   getSelectedPost: (state: RootState) => state.postReducer.selectedPost,
+  getSelectedPostLoading: (state: RootState) =>
+    state.postReducer.selectedPosLoading,
+  getMyPosts: (state: RootState) => state.postReducer.myPosts,
 };
 
 export default postSlice.reducer;

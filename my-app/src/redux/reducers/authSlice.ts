@@ -24,9 +24,7 @@ const authSlice = createSlice({
   reducers: {
     signUpUser: (_, __: PayloadAction<SignUpUserPayload>) => {},
     activateUser: (_, __: PayloadAction<ActivateUserPayload>) => {},
-
     signInUser: (_, __: PayloadAction<SignInUserPayload>) => {},
-
     setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
     },
@@ -34,6 +32,7 @@ const authSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<UserInfoResponse | null>) => {
       state.userInfo = action.payload;
     },
+    logoutUser: (_, __: PayloadAction<undefined>) => {},
   },
 });
 
@@ -44,11 +43,14 @@ export const {
   setAccessToken,
   getUserInfo,
   setUserInfo,
+  logoutUser
 } = authSlice.actions;
 
 export const AuthSelectors = {
   getLoggedIn: (state: RootState) => !!state.authReducer.accessToken,
   getUserInfo: (state: RootState) => state.authReducer.userInfo,
+  getlogoutUser: (state: RootState) => state.authReducer.userInfo,
+
 };
 
 export default authSlice.reducer;

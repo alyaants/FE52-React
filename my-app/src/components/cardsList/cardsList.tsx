@@ -13,6 +13,7 @@ import {
   setSelectedImage,
   setSelectedImageOpened,
 } from "../../redux/reducers/imgSlice";
+import Loader from "../loader/loader";
 
 interface CardsListProps {
   cardsList: PostsList;
@@ -77,6 +78,6 @@ const CardsList = (props: CardsListProps) => {
         })}
       </div>
     </div>
-  ) : null;
+  ) : <Loader />;
 };
 export default CardsList;

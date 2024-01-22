@@ -13,8 +13,8 @@ import UserName from "../username/username";
 import { AccountIcon } from "../assets/icons/accountIcon";
 import { SearchIcon } from "../assets/icons/searchIcon";
 import Input from "../input/input";
-import { useSelector } from "react-redux";
-import { AuthSelectors } from "../../redux/reducers/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthSelectors, logoutUser } from "../../redux/reducers/authSlice";
 
 const Header = () => {
   const [isOpened, setOpened] = useState(false);
@@ -25,6 +25,8 @@ const Header = () => {
 
   const navigate = useNavigate();
   const userInfo = useSelector(AuthSelectors.getUserInfo);
+
+  const dispatch = useDispatch();
 
   const navLinks = useMemo(
     () => [
@@ -47,6 +49,11 @@ const Header = () => {
   const onLoginButtonClick = () => {
     navigate(RoutesList.SignIn);
   };
+
+  const onLogout = () => {
+    dispatch(logoutUser())
+  }
+
   return (
     <div
       className={classNames(styles.container, {
@@ -135,8 +142,8 @@ const Header = () => {
             <ThemeSwitcher />
             <Button
               type={ButtonTypes.Secondary}
-              title={"Sign In"}
-              onClick={onLoginButtonClick}
+              title={isLoggedIn ? "Log Out" : "Sign In"}
+              onClick={isLoggedIn ? onLogout : onLoginButtonClick}
               className={classNames(styles.authBtn, {
                 [styles.darkAuthBtn]: themeValue === Theme.Dark,
               })}

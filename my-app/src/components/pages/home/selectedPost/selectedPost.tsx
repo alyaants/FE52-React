@@ -10,6 +10,7 @@ import {
   getSelectedPost,
 } from "../../../../redux/reducers/postSlice";
 import { RoutesList } from "../../router";
+import Loader from "../../../loader/loader";
 
 // interface SelectedPostPrpos {
 //   title: string;
@@ -23,6 +24,10 @@ const SelectedPost = () => {
 
   const selectedPost = useSelector(PostSelectors.getSelectedPost);
 
+  const isSelectedPostLoading = useSelector(
+    PostSelectors.getSelectedPostLoading
+  );
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,13 +37,14 @@ const SelectedPost = () => {
   }, [id]);
 
   const onHomeClick = () => {
-    navigate(RoutesList.Home)
-  }
+    navigate(RoutesList.Home);
+  };
 
-  return selectedPost ? (
+  return selectedPost && !isSelectedPostLoading ? (
     <div className={styles.container}>
       <div className={styles.breadcrumbs}>
-        <span onClick={onHomeClick}>Home</span> <span className={styles.postNumber}>| Post {selectedPost.id}</span>
+        <span onClick={onHomeClick}>Home</span>{" "}
+        <span className={styles.postNumber}>| Post {selectedPost.id}</span>
       </div>
       <div className={styles.title}>{selectedPost.title}</div>
       <div className={styles.selectedPostImage}>
@@ -61,7 +67,9 @@ const SelectedPost = () => {
         </div>
       </div>
     </div>
-  ) : null;
+  ) : (
+    <Loader />
+  );
 };
 
 export default SelectedPost;

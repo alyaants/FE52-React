@@ -12,8 +12,8 @@ import { useEffect } from "react";
 export enum RoutesList {
   Home = "/",
   SignUp = "/sign-up",
-  RegistrationConfirmation = "/activate/:uid/:token",
   SignIn = "/sign-in",
+  RegistrationConfirmation = "/activate/:uid/:token",
   Success = "/sign-in/success",
   SelectedPost = "/post/:id",
   Default = "*",

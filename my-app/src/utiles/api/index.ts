@@ -1,7 +1,7 @@
 import { create } from "apisauce";
 import {
   ActivateUserData,
-  SignInData,
+  SignInUserData,
   SignUpUserData,
 } from "../../redux/@types";
 
@@ -25,13 +25,33 @@ const getSelectedPost = (id: string) => {
   return API.get(`/blog/posts/${id}/`);
 };
 
-const createToken = (data: SignInData) => {
+const createToken = (data: SignInUserData) => {
   return API.post("/auth/jwt/create/", data);
+};
+
+const verifyToken = (token: string) => {
+  return API.post("/auth/jwt/verify/", { token });
+};
+
+const refreshToken = (refresh: string) => {
+  return API.post("/auth/jwt/refresh/", { refresh });
 };
 
 const getUserInfo = (token: string) => {
   return API.get(
     "/auth/users/me/",
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const getMyPosts = (token: string) => {
+  return API.get(
+    "/blog/posts/my_posts/",
     {},
     {
       headers: {
@@ -48,4 +68,7 @@ export default {
   getSelectedPost,
   createToken,
   getUserInfo,
+  verifyToken,
+  refreshToken,
+  getMyPosts
 };

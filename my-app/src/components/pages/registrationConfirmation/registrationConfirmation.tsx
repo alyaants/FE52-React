@@ -11,8 +11,10 @@ import { RoutesList } from "../router";
 const RegistrationConfirmation = () => {
   const { themeValue } = useThemeContext();
   const { uid, token } = useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const onSubmit = () => {
     if (uid && token) {
       dispatch(
