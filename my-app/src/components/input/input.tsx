@@ -1,4 +1,8 @@
-import { ChangeEvent, LegacyRef } from "react";
+import {
+  ChangeEvent,
+  LegacyRef,
+  KeyboardEvent,
+} from "react";
 import classNames from "classnames";
 import styles from "./input.module.scss";
 import React from "react";
@@ -14,11 +18,13 @@ interface InputProps {
   errorText?: string;
   textarea?: boolean;
   className?: string;
+  onKeyDown?: (
+    event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   // ref: LegacyRef<HTMLInputElement | null>;
 }
 
 const Input = React.forwardRef((props: InputProps, ref) => {
-
   const { themeValue } = useThemeContext();
 
   const onInputChange = (
@@ -35,6 +41,7 @@ const Input = React.forwardRef((props: InputProps, ref) => {
       [styles.disabled]: props.disabled,
       [styles.errorInput]: props.errorText,
     }),
+    onKeyDown: props.onKeyDown,
   };
 
   return (
@@ -45,16 +52,16 @@ const Input = React.forwardRef((props: InputProps, ref) => {
     >
       <div className={styles.title}>{props.title}</div>
       {props.textarea ? (
-          <textarea
-            ref={ref as LegacyRef<HTMLTextAreaElement> | null}
-            {...inputProps}
-          />
-        ) : (
-          <input
-            ref={ref as LegacyRef<HTMLInputElement> | null}
-            {...inputProps}
-          />
-        )}
+        <textarea
+          ref={ref as LegacyRef<HTMLTextAreaElement> | null}
+          {...inputProps}
+        />
+      ) : (
+        <input
+          ref={ref as LegacyRef<HTMLInputElement> | null}
+          {...inputProps}
+        />
+      )}
       {props.errorText && (
         <div className={styles.errorText}>{props.errorText}</div>
       )}

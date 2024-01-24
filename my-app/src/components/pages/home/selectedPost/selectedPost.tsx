@@ -1,6 +1,6 @@
-import { Route, Router, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Dislike from "../../../assets/icons/dislike/dislike";
-import Favorite from "../../../assets/icons/favorite/favorite";
+import { Favorite } from "../../../assets/icons/favorite/favorite";
 import Like from "../../../assets/icons/like/like";
 import styles from "./selectedPost.module.scss";
 import { useEffect } from "react";

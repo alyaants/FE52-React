@@ -18,9 +18,11 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState(TabsTypes.All);
 
   const dispatch = useDispatch();
-  const cardsList = useSelector(PostSelectors.getPostsList);
 
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
+
+  const allPostsList = useSelector(PostSelectors.getPostsList);
+  const myPosts = useSelector(PostSelectors.getMyPosts);
 
   const tabsList = useMemo(
     () => [
@@ -38,9 +40,19 @@ const Home = () => {
       dispatch(getPostsList());
     }
   }, [activeTab]);
+  
   const onTabClick = (tab: TabsTypes) => () => {
     setActiveTab(tab);
   };
+
+  const tabsContextSwitcher = () => {
+    if (activeTab === TabsTypes.MyPosts) {
+      return myPosts;
+    } else {
+      return allPostsList;
+    }
+  };
+  
   return (
     <div>
       <Title title={"Blog"} className={styles.pageTitle} />
@@ -49,7 +61,7 @@ const Home = () => {
         activeTab={activeTab}
         onTabClick={onTabClick}
       />
-      <CardsList cardsList={cardsList} />
+      <CardsList cardsList={tabsContextSwitcher()} />
       <SelectedPost />
       <SelectedImg />
     </div>

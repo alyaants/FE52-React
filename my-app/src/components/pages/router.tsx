@@ -9,6 +9,7 @@ import SelectedPost from "./home/selectedPost/selectedPost";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelectors, getUserInfo } from "../../redux/reducers/authSlice";
 import { useEffect } from "react";
+import Search from "./search/serach";
 export enum RoutesList {
   Home = "/",
   SignUp = "/sign-up",
@@ -16,6 +17,7 @@ export enum RoutesList {
   RegistrationConfirmation = "/activate/:uid/:token",
   Success = "/sign-in/success",
   SelectedPost = "/post/:id",
+  Search = "/posts/:search",
   Default = "*",
 }
 
@@ -62,6 +64,7 @@ const Router = () => {
             }
           />
           <Route path={RoutesList.SelectedPost} element={<SelectedPost />} />
+          <Route path={RoutesList.Search} element={<Search />} />
           <Route
             path={RoutesList.Default}
             element={<Navigate to={RoutesList.Home} />}

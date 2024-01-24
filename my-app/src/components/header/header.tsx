@@ -1,3 +1,4 @@
+import React, { KeyboardEvent } from "react";
 import classNames from "classnames";
 import { useThemeContext } from "../../context/theme";
 import styles from "./header.module.scss";
@@ -42,6 +43,10 @@ const Header = () => {
 
   const handleSearchOpened = () => {
     setSearch(!isSearch);
+    if (isSearch && inputValue) {
+      navigate(`posts/${inputValue}`);
+      setInputValue("");
+    }
   };
 
   const { themeValue } = useThemeContext();
@@ -51,8 +56,14 @@ const Header = () => {
   };
 
   const onLogout = () => {
-    dispatch(logoutUser())
-  }
+    dispatch(logoutUser());
+  };
+
+  const onKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      handleSearchOpened();
+    }
+  };
 
   return (
     <div
@@ -74,6 +85,7 @@ const Header = () => {
               onСhange={setInputValue}
               value={inputValue}
               className={styles.searchInput}
+              onKeyDown={onKeyDown}
             />
 
             <Button

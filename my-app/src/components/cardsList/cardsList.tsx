@@ -1,19 +1,9 @@
-import { useDispatch } from "react-redux";
-import { LikeStatus, Post, PostsList } from "../../@types";
+import { Post, PostsList } from "../../@types";
 import PostCard from "../postCard/postCard";
 import { PostCardSize } from "../postCard/postCard";
 import styles from "./cardsList.module.scss";
-import {
-  setFavouritesPosts,
-  setLikeStatus,
-  setSelectedPostModal,
-  setSelectedPostModalOpened,
-} from "../../redux/reducers/postSlice";
-import {
-  setSelectedImage,
-  setSelectedImageOpened,
-} from "../../redux/reducers/imgSlice";
 import Loader from "../loader/loader";
+import useCardActions from "../../hooks/useCardsActions";
 
 interface CardsListProps {
   cardsList: PostsList;
@@ -21,25 +11,8 @@ interface CardsListProps {
   onImageClick?: (image: string) => void;
 }
 const CardsList = (props: CardsListProps) => {
-  const dispatch = useDispatch();
-
-  const onMoreClick = (post: Post) => () => {
-    dispatch(setSelectedPostModal(post));
-    dispatch(setSelectedPostModalOpened(true));
-  };
-  const onImageClick = (image: string) => () => {
-    dispatch(setSelectedImage(image));
-    dispatch(setSelectedImageOpened(true));
-  };
-
-  const onStatusClick = (card: Post) => (status: LikeStatus) => {
-    dispatch(setLikeStatus({ card, status }));
-  };
-
-  const onFavouriteClick = (card: Post) => () => {
-    dispatch(setFavouritesPosts({ card }));
-  };
-
+  const { onStatusClick, onFavouriteClick, onMoreClick, onImageClick } =
+    useCardActions();
   return CardsList.length ? (
     <div className={styles.cardsListContainer}>
       {/* <PostCard size={PostCardSize.Large} {...props.cardsList[0]} /> */}
@@ -78,6 +51,8 @@ const CardsList = (props: CardsListProps) => {
         })}
       </div>
     </div>
-  ) : <Loader />;
+  ) : (
+    <Loader />
+  );
 };
 export default CardsList;

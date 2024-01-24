@@ -3,7 +3,6 @@ import { PostsList } from "../@types";
 export type PayloadWithDataAndCallback<Data> = {
   data: Data;
   callback: () => void;
-  //   функция, котора выполняется, если создание успешно
 };
 
 export type SignUpUserData = {

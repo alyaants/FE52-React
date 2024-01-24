@@ -12,6 +12,7 @@ type InitialState = {
   selectedPost: Post | null;
   selectedPosLoading: boolean;
   myPosts: PostsList;
+  searchedPosts: PostsList;
 };
 
 const initialState: InitialState = {
@@ -24,6 +25,7 @@ const initialState: InitialState = {
   selectedPost: null,
   selectedPosLoading: false,
   myPosts: [],
+  searchedPosts: [],
 };
 
 const postSlice = createSlice({
@@ -91,6 +93,10 @@ const postSlice = createSlice({
     setMyPosts: (state, action: PayloadAction<PostsList>) => {
       state.myPosts = action.payload;
     },
+    getSearchedPosts: (_, __: PayloadAction<string>) => {},
+    setSearshedPosts: (state, action: PayloadAction<PostsList>) => {
+      state.searchedPosts = action.payload;
+    },
   },
 });
 export const {
@@ -105,6 +111,8 @@ export const {
   setSelectedPost,
   getMyPosts,
   setMyPosts,
+  getSearchedPosts,
+  setSearshedPosts,
 } = postSlice.actions;
 
 export const PostSelectors = {
@@ -119,6 +127,7 @@ export const PostSelectors = {
   getSelectedPostLoading: (state: RootState) =>
     state.postReducer.selectedPosLoading,
   getMyPosts: (state: RootState) => state.postReducer.myPosts,
+  getSearchedPosts: (state: RootState) => state.postReducer.searchedPosts,
 };
 
 export default postSlice.reducer;

@@ -3,9 +3,11 @@ import API from "../../utiles/api";
 import {
   getMyPosts,
   getPostsList,
+  getSearchedPosts,
   getSelectedPost,
   setMyPosts,
   setPostsList,
+  setSearshedPosts,
   setSelectedPost,
   setSelectedPostLoading,
 } from "../reducers/postSlice";
@@ -48,10 +50,23 @@ function* getMyPostsWorker() {
   }
 }
 
+function* getSearchedPostsWorker(action: PayloadAction<string>) {
+  const response: ApiResponse<PostData> = yield call(
+    API.getPosts,
+    action.payload
+  );
+  if (response.ok && response.data) {
+    yield put(setSearshedPosts(response.data.results));
+  } else {
+    console.error("Searched Posts error", response.problem);
+  }
+}
+
 export default function* postSaga() {
   yield all([
     takeLatest(getPostsList, getPostsWorker),
     takeLatest(getSelectedPost, getSelectedPostWorker),
     takeLatest(getMyPosts, getMyPostsWorker),
+    takeLatest(getSearchedPosts, getSearchedPostsWorker),
   ]);
 }

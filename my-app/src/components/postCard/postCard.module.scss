@@ -1,5 +1,51 @@
 @import "../../styles/colors.scss";
 
+@mixin smallCard() {
+  max-width: 354px;
+  margin-bottom: 50px;
+  .content {
+    margin-bottom: 24px;
+    gap: 30px;
+  }
+
+  .contentText {
+    max-width: 222px;
+  }
+
+  .cardTitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    height: 84px;
+    color: $secondary;
+
+    &:hover {
+      cursor: pointer;
+      color: $primary;
+    }
+  }
+  .cardImg {
+    width: 96px;
+    height: 96px;
+  }
+
+  .darkTabTitle {
+    color: $white;
+  }
+
+  .darkIcon {
+    color: $white;
+    svg > path {
+      fill: $white;
+    }
+    &:hover {
+      svg > path {
+        fill: $primary;
+      }
+    }
+  }
+}
+
 .content {
   display: flex;
   justify-content: space-between;
@@ -128,7 +174,7 @@
     width: 352px;
     height: 246px;
     margin-bottom: 24px;
-    img{
+    img {
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -152,67 +198,18 @@
   }
 }
 
-//small
+.small {
+  @include smallCard();
+}
 
-// .small {
-//   @include smallCard();
-// }
 
-//search
-
-// .search {
-//   @include smallCard();
-//   max-width: unset;
-//   margin-bottom: 40px;
-//   padding-right: 20px;
-//   .content {
-//     flex-direction: row-reverse;
-//     justify-content: flex-end;
-//   }
-// }
-
-.small{
-  width: 354px;
-  margin-bottom: 50px;
+.search {
+  @include smallCard();
+  max-width: unset;
+  margin-bottom: 40px;
+  padding-right: 20px;
   .content {
-    margin-bottom: 24px;
-    gap: 30px;
-  }
-
-  .contentText {
-    max-width: 222px;
-  }
-
-  .cardTitle {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 28px;
-    height: 84px;
-    color: $secondary;
-
-    &:hover {
-      cursor: pointer;
-      color: $primary;
-    }
-  }
-  .cardImg {
-    width: 96px;
-    height: 96px;
-  }
-
-  .darkTabTitle {
-    color: $white;
-  }
-
-  .darkIcon {
-    color: $white;
-    svg > path {
-      fill: $white;
-    }
-    &:hover {
-      svg > path {
-        fill: $primary;
-      }
-    }
+    flex-direction: row-reverse;
+    justify-content: flex-end;
   }
 }

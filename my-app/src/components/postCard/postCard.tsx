@@ -2,20 +2,22 @@ import classNames from "classnames";
 import styles from "./postCard.module.scss";
 import Like from "../assets/icons/like/like";
 import Dislike from "../assets/icons/dislike/dislike";
-import Favorite from "../assets/icons/favorite/favorite";
 import Other from "../assets/icons/other";
 import { LikeStatus, Post, Theme } from "../../@types";
 import { useThemeContext } from "../../context/theme";
 import { useSelector } from "react-redux";
 import { PostSelectors } from "../../redux/reducers/postSlice";
 import { useNavigate } from "react-router-dom";
+import { FavoriteFill } from "../assets/icons/favorite/favoriteFill";
+import { Favorite } from "../assets/icons/favorite/favorite";
 
 export enum PostCardSize {
   Large = "large",
   Medium = "medium",
   Small = "small",
+  Search = "search",
 }
-interface PostCardProps extends Post{
+interface PostCardProps extends Post {
   size: PostCardSize;
   onMoreClick?: () => void;
   onImageClick?: () => void;
@@ -90,7 +92,7 @@ const PostCard = (props: PostCardProps) => {
             })}
             onClick={() => props.onFavouriteClick()}
           >
-            {favouriteIndex === -1 ? <Favorite /> : <Favorite />}
+            {favouriteIndex === -1 ? <Favorite /> : <FavoriteFill />}
           </div>
           <div
             className={classNames(styles.icon, {
