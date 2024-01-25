@@ -13,6 +13,8 @@ import {
   getPostsList,
 } from "../../../redux/reducers/postSlice";
 import { AuthSelectors } from "../../../redux/reducers/authSlice";
+import { PER_PAGE } from "../../../utiles/constants";
+import Paginate from "../../pagination/pagination";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState(TabsTypes.All);
@@ -22,7 +24,18 @@ const Home = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
 
   const allPostsList = useSelector(PostSelectors.getPostsList);
+  const totalCount = useSelector(PostSelectors.getTotalPostsCount);
   const myPosts = useSelector(PostSelectors.getMyPosts);
+
+  const [currentPage, setCurrentPage] = useState(1); // текущая страница на которой мы находимся
+
+  const pagesCount = useMemo(
+    /// сколько итого у нас страниц
+    () => Math.ceil(totalCount / PER_PAGE),
+    [totalCount]
+  );
+
+  const isListLoading = useSelector(PostSelectors.getPostsLoading);
 
   const tabsList = useMemo(
     () => [
@@ -33,14 +46,15 @@ const Home = () => {
     [isLoggedIn]
   );
 
-  useEffect(() => {
+  useEffect(() => {  /// сколько нужно пропустить постов (сколько мы уже посмотрели)
     if (activeTab === TabsTypes.MyPosts) {
       dispatch(getMyPosts());
     } else {
-      dispatch(getPostsList());
+      const offset = (currentPage - 1) * PER_PAGE;
+      dispatch(getPostsList({ offset, isOverwrite: true }));
     }
-  }, [activeTab]);
-  
+  }, [activeTab, currentPage]);
+
   const onTabClick = (tab: TabsTypes) => () => {
     setActiveTab(tab);
   };
@@ -52,7 +66,11 @@ const Home = () => {
       return allPostsList;
     }
   };
-  
+
+  const onPageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected + 1);
+  };
+
   return (
     <div>
       <Title title={"Blog"} className={styles.pageTitle} />
@@ -61,12 +79,15 @@ const Home = () => {
         activeTab={activeTab}
         onTabClick={onTabClick}
       />
-      <CardsList cardsList={tabsContextSwitcher()} />
+      <CardsList cardsList={tabsContextSwitcher()} isLoading={isListLoading} />
+      <Paginate
+        pagesCount={pagesCount}
+        onPageChange={onPageChange}
+        currentPage={currentPage}
+      />
       <SelectedPost />
       <SelectedImg />
     </div>
   );
 };
 export default Home;
-
-// 19:48

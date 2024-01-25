@@ -88,4 +88,3 @@ export default function* authSaga() {
     takeLatest(logoutUser, logoutWorker),
   ]);
 }
-

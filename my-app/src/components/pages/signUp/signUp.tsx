@@ -54,7 +54,7 @@ const SignUp = () => {
             [styles.darkAdditionalInfo]: themeValue === Theme.Dark,
           })}
         >
-          {"Already have an account?"}{" "}
+          {"Already have an account?"}
           <span className={styles.signIn} onClick={onSingInClick}>Sign In</span>
         </div>
       }

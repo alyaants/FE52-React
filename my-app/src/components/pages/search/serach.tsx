@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { RoutesList } from "../router";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import PostCard, { PostCardSize } from "../../postCard/postCard";
 import useCardActions from "../../../hooks/useCardsActions";
 import style from "./search.module.scss";
 import EmptyState from "../../emptyState/emptyState";
+import { PER_PAGE } from "../../../utiles/constants";
 
 const Search = () => {
   const { onStatusClick, onFavouriteClick, onMoreClick, onImageClick } =
@@ -20,14 +21,18 @@ const Search = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchedPosts = useSelector(PostSelectors.getSearchedPosts);
-
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     if (!search) {
       navigate(RoutesList.Home);
     } else {
-      dispatch(getSearchedPosts(search));
+      const offset = (currentPage - 1) * PER_PAGE;
+      dispatch(getSearchedPosts({ search, offset, isOverwrite: false }));
     }
   }, [search]);
+  const onNextReached = () => {
+    setCurrentPage(currentPage + 1);
+  };
   return (
     <div>
       <Title title={`Search results: ${search}`} />
@@ -37,6 +42,7 @@ const Search = () => {
             {searchedPosts.map((post) => {
               return (
                 <PostCard
+                  key={post.id}
                   size={PostCardSize.Search}
                   onMoreClick={onMoreClick(post)}
                   onImageClick={onImageClick(post.image)}

@@ -1,6 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { LikeStatus, Post, PostsList } from "../../@types";
+import {
+  GetPostsPayload,
+  GetSearchedPostsPayload,
+  SetPostsListPayload,
+  SetSearchedPostsPayload,
+} from "../@types";
 
 type InitialState = {
   isSelectedPostOpened: boolean;
@@ -9,10 +15,13 @@ type InitialState = {
   dislikedPosts: PostsList;
   favouritesPosts: PostsList;
   postsList: PostsList;
+  totalCount: number;
   selectedPost: Post | null;
   selectedPosLoading: boolean;
   myPosts: PostsList;
   searchedPosts: PostsList;
+  isPostsListLoading: boolean;
+  totalSearchedCount: number;
 };
 
 const initialState: InitialState = {
@@ -22,10 +31,13 @@ const initialState: InitialState = {
   dislikedPosts: [],
   favouritesPosts: [],
   postsList: [],
+  totalCount: 0,
   selectedPost: null,
   selectedPosLoading: false,
   myPosts: [],
   searchedPosts: [],
+  isPostsListLoading: false,
+  totalSearchedCount: 0,
 };
 
 const postSlice = createSlice({
@@ -76,10 +88,16 @@ const postSlice = createSlice({
       }
     },
 
-    getPostsList: (_, __: PayloadAction<undefined>) => {}, //сначала получить get пустой
-    setPostsList: (state, action: PayloadAction<PostsList>) => {
+    getPostsList: (_, __: PayloadAction<GetPostsPayload>) => {}, //сначала получить get пустой
+    setPostsList: (state, action: PayloadAction<SetPostsListPayload>) => {
       //делаем set action, то что хотим получить и зписать в сагу
-      state.postsList = action.payload;
+      const { total, isOverwrite, postsList } = action.payload;
+      state.totalCount = total;
+      if (isOverwrite) {
+        state.postsList = postsList;
+      } else {
+        state.postsList.push(...postsList);
+      }
     },
 
     getSelectedPost: (_, __: PayloadAction<string>) => {},
@@ -93,9 +111,21 @@ const postSlice = createSlice({
     setMyPosts: (state, action: PayloadAction<PostsList>) => {
       state.myPosts = action.payload;
     },
-    getSearchedPosts: (_, __: PayloadAction<string>) => {},
-    setSearshedPosts: (state, action: PayloadAction<PostsList>) => {
-      state.searchedPosts = action.payload;
+    getSearchedPosts: (_, __: PayloadAction<GetSearchedPostsPayload>) => {},
+    setSearchedPosts: (
+      state,
+      action: PayloadAction<SetSearchedPostsPayload>
+    ) => {
+      const { total, postsList, isOverwrite } = action.payload;
+      state.totalSearchedCount = total;
+      if (isOverwrite) {
+        state.searchedPosts = postsList;
+      } else {
+        state.searchedPosts.push(...postsList);
+      }
+    },
+    setPostsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isPostsListLoading = action.payload;
     },
   },
 });
@@ -112,7 +142,8 @@ export const {
   getMyPosts,
   setMyPosts,
   getSearchedPosts,
-  setSearshedPosts,
+  setSearchedPosts,
+  setPostsLoading,
 } = postSlice.actions;
 
 export const PostSelectors = {
@@ -128,6 +159,8 @@ export const PostSelectors = {
     state.postReducer.selectedPosLoading,
   getMyPosts: (state: RootState) => state.postReducer.myPosts,
   getSearchedPosts: (state: RootState) => state.postReducer.searchedPosts,
+  getPostsLoading: (state: RootState) => state.postReducer.isPostsListLoading,
+  getTotalPostsCount: (state: RootState) => state.postReducer.totalCount
 };
 
 export default postSlice.reducer;

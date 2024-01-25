@@ -9,11 +9,12 @@ interface CardsListProps {
   cardsList: PostsList;
   onMoreClick?: (post: Post) => void;
   onImageClick?: (image: string) => void;
+  isLoading: boolean
 }
 const CardsList = (props: CardsListProps) => {
   const { onStatusClick, onFavouriteClick, onMoreClick, onImageClick } =
     useCardActions();
-  return CardsList.length ? (
+  return CardsList.length && !props.isLoading ? (
     <div className={styles.cardsListContainer}>
       {/* <PostCard size={PostCardSize.Large} {...props.cardsList[0]} /> */}
       <div className={styles.medium}>
