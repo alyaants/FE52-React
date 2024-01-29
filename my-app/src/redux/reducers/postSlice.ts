@@ -116,16 +116,15 @@ const postSlice = createSlice({
       state,
       action: PayloadAction<SetSearchedPostsPayload>
     ) => {
-      const { total, postsList, isOverwrite } = action.payload;
+      const { total, postsList } = action.payload;
       state.totalSearchedCount = total;
-      if (isOverwrite) {
-        state.searchedPosts = postsList;
-      } else {
-        state.searchedPosts.push(...postsList);
-      }
+      state.searchedPosts.push(...postsList);
     },
     setPostsLoading: (state, action: PayloadAction<boolean>) => {
       state.isPostsListLoading = action.payload;
+    },
+    clearSearchedPosts: (state) => {
+      state.searchedPosts = [];
     },
   },
 });
@@ -144,6 +143,7 @@ export const {
   getSearchedPosts,
   setSearchedPosts,
   setPostsLoading,
+  clearSearchedPosts,
 } = postSlice.actions;
 
 export const PostSelectors = {
@@ -160,7 +160,9 @@ export const PostSelectors = {
   getMyPosts: (state: RootState) => state.postReducer.myPosts,
   getSearchedPosts: (state: RootState) => state.postReducer.searchedPosts,
   getPostsLoading: (state: RootState) => state.postReducer.isPostsListLoading,
-  getTotalPostsCount: (state: RootState) => state.postReducer.totalCount
+  getTotalPostsCount: (state: RootState) => state.postReducer.totalCount,
+  getTotalSearchedPosts: (state: RootState) =>
+    state.postReducer.totalSearchedCount,
 };
 
 export default postSlice.reducer;

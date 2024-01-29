@@ -16,6 +16,7 @@ import { SearchIcon } from "../assets/icons/searchIcon";
 import Input from "../input/input";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthSelectors, logoutUser } from "../../redux/reducers/authSlice";
+import { clearSearchedPosts } from "../../redux/reducers/postSlice";
 
 const Header = () => {
   const [isOpened, setOpened] = useState(false);
@@ -44,6 +45,7 @@ const Header = () => {
   const handleSearchOpened = () => {
     setSearch(!isSearch);
     if (isSearch && inputValue) {
+      dispatch(clearSearchedPosts());
       navigate(`posts/${inputValue}`);
       setInputValue("");
     }

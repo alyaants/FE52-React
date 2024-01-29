@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, delay, put, takeLatest } from "redux-saga/effects";
 import API from "../../utiles/api";
 import {
   getMyPosts,
@@ -19,10 +19,12 @@ import callCheckingAuth from "./helpers/callCheckingAuth";
 
 function* getPostsWorker(action: PayloadAction<GetPostsPayload>) {
   yield put(setPostsLoading(true));
-  const { offset, isOverwrite } = action.payload;
+  const { offset, isOverwrite, ordering } = action.payload;
   const response: ApiResponse<GetPostsResponseData> = yield call(
     API.getPosts,
-    offset
+    offset,
+    "",
+    ordering
   );
   if (response.ok && response.data) {
     const { count, results } = response.data;
@@ -30,7 +32,7 @@ function* getPostsWorker(action: PayloadAction<GetPostsPayload>) {
       setPostsList({
         total: count,
         postsList: results,
-        isOverwrite: isOverwrite,
+        isOverwrite,
       })
     );
   } else {
@@ -63,9 +65,11 @@ function* getMyPostsWorker() {
     console.error("Get My Posts error", response?.problem);
   }
 }
-
-function* getSearchedPostsWorker(action: PayloadAction<GetSearchedPostsPayload>) {
-  const { offset, search, isOverwrite  } = action.payload;
+function* getSearchedPostsWorker(
+  action: PayloadAction<GetSearchedPostsPayload>
+) {
+  yield delay(500);
+  const { offset, search, isOverwrite } = action.payload;
   const response: ApiResponse<PostData> = yield call(
     API.getPosts,
     offset,
@@ -77,7 +81,7 @@ function* getSearchedPostsWorker(action: PayloadAction<GetSearchedPostsPayload>)
       setSearchedPosts({
         postsList: results,
         total: count,
-        isOverwrite,
+        // isOverwrite,
       })
     );
   } else {

@@ -1,8 +1,32 @@
 @import "../../../styles/colors.scss";
 
-.container{
+.container {
     margin-top: 64px;
     display: flex;
     flex-direction: column;
     gap: 40px;
-}
+    overflow-y: scroll;
+    height: 500px;
+    width: 1000px;
+  }
+  
+  .container::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .container::-webkit-scrollbar-track {
+    background: $extra-light;
+  }
+  
+  .container::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: 5px;
+  }
+  
+  .darkContainer::-webkit-scrollbar-track {
+    background: $secondary;
+  }
+  
+  .darkContainer::-webkit-scrollbar-thumb {
+    background: $white;
+  }

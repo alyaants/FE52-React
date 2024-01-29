@@ -58,6 +58,7 @@ export type RefreshResponseData = {
 export type GetPostsPayload = {
   offset: number;
   isOverwrite: boolean;
+  ordering?: string;
 };
 
 export type SetPostsListPayload = {
@@ -71,6 +72,7 @@ export type GetPostsResponseData = {
   next: string;
   previous: string;
   results: PostsList;
+  ordering?: string;
 };
 
 export type GetSearchedPostsPayload = {
@@ -79,4 +81,5 @@ export type GetSearchedPostsPayload = {
   isOverwrite: boolean;
 };
 
-export type SetSearchedPostsPayload = SetPostsListPayload;
+export type SetSearchedPostsPayload = Omit<SetPostsListPayload, "isOverwrite">;
+

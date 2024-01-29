@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { TabsTypes } from "../../../@types";
+import { Order, TabsTypes } from "../../../@types";
 import CardsList from "../../cardsList/cardsList";
 import TabsList from "../../tabsList/tabsList";
 import Title from "../../title/title";
@@ -15,6 +15,7 @@ import {
 import { AuthSelectors } from "../../../redux/reducers/authSlice";
 import { PER_PAGE } from "../../../utiles/constants";
 import Paginate from "../../pagination/pagination";
+import Button, { ButtonTypes } from "../../button";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState(TabsTypes.All);
@@ -26,6 +27,8 @@ const Home = () => {
   const allPostsList = useSelector(PostSelectors.getPostsList);
   const totalCount = useSelector(PostSelectors.getTotalPostsCount);
   const myPosts = useSelector(PostSelectors.getMyPosts);
+
+  const [ordering, setOrdering] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1); // текущая страница на которой мы находимся
 
@@ -46,14 +49,15 @@ const Home = () => {
     [isLoggedIn]
   );
 
-  useEffect(() => {  /// сколько нужно пропустить постов (сколько мы уже посмотрели)
+  useEffect(() => {
+    /// сколько нужно пропустить постов (сколько мы уже посмотрели)
     if (activeTab === TabsTypes.MyPosts) {
       dispatch(getMyPosts());
     } else {
       const offset = (currentPage - 1) * PER_PAGE;
-      dispatch(getPostsList({ offset, isOverwrite: true }));
+      dispatch(getPostsList({ offset, isOverwrite: true, ordering }));
     }
-  }, [activeTab, currentPage]);
+  }, [activeTab, currentPage, ordering]);
 
   const onTabClick = (tab: TabsTypes) => () => {
     setActiveTab(tab);
@@ -71,6 +75,15 @@ const Home = () => {
     setCurrentPage(selected + 1);
   };
 
+  const onSortBtnClick = (btn: Order) => () => {
+    if (btn === ordering) {
+      setOrdering("");
+      setCurrentPage(1);
+    } else {
+      setOrdering(btn);
+    }
+  };
+
   return (
     <div>
       <Title title={"Blog"} className={styles.pageTitle} />
@@ -79,6 +92,28 @@ const Home = () => {
         activeTab={activeTab}
         onTabClick={onTabClick}
       />
+      <div className={styles.containerButton}>
+        <Button
+          className={styles.buttonSort}
+          type={
+            ordering === Order.Date
+              ? ButtonTypes.Primary
+              : ButtonTypes.Secondary
+          }
+          title={"Date"}
+          onClick={onSortBtnClick(Order.Date)}
+        />
+        <Button
+          className={styles.buttonSort}
+          type={
+            ordering === Order.Title
+              ? ButtonTypes.Primary
+              : ButtonTypes.Secondary
+          }
+          title={"Title"}
+          onClick={onSortBtnClick(Order.Title)}
+        />
+      </div>
       <CardsList cardsList={tabsContextSwitcher()} isLoading={isListLoading} />
       <Paginate
         pagesCount={pagesCount}
